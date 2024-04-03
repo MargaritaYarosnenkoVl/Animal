@@ -4,7 +4,7 @@
 привет
 {% for s in show%}
 {{s.title}}
-<img src="media/{{ s.banner }}" alt="" class="card-img-top">
+{{ s.banner|safe }}
 
 {% endfor %}
 {% endblock %}

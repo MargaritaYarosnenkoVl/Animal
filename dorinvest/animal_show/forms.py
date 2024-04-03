@@ -8,6 +8,9 @@ class ShowForm(ModelForm):
     class Meta:
         model = Show
         fields = '__all__'
+        widgets = {
+            'user': forms.HiddenInput(),
+        }
 
 #
 # class AnimalsForm(ModelForm):

@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -12,27 +13,30 @@ class Show(models.Model):
         ("dog", "собака"), ]
 
     title = models.CharField(max_length=255, verbose_name='Название выставки')
-    banner = models.ImageField(upload_to='banner/',  verbose_name='Баннер')
+    banner = RichTextField(verbose_name='Баннер')
     info = models.TextField(verbose_name='Информация о выставке')
-    logo = models.ImageField(upload_to='logo/', verbose_name='Логотипы партнеров')
+    logo = RichTextField(verbose_name='Логотипы партнеров')
     contacts = models.TextField(verbose_name='Контакты')
-    last_images = models.ImageField(upload_to='last_images/', verbose_name='Фотография животных с прошлой выставки')
+    last_images = RichTextField(verbose_name='Фотография животных с прошлой выставки')
     date = models.DateField(verbose_name='Дата проведения')
     location = models.CharField(max_length=255, verbose_name='Место проведения')
     social_links = models.URLField(verbose_name='Ссылки на социальные сети')
 
     is_published = models.BooleanField(default=False, verbose_name='Публикация')
-    result_images = models.ImageField(upload_to='result_images/',  verbose_name='Фотография животных по завершению выставки')
+    result_images = RichTextField(verbose_name='Фотография животных по завершению выставки')
     result = models.TextField(verbose_name='Итоги выставки')
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
 
-    animals = models.ImageField(upload_to='animals/', verbose_name='Фотография животных')
+    animals = RichTextField(verbose_name='Фотография животных')
     description = models.TextField(verbose_name='Описание животного')
     category = models.CharField(max_length=3, choices=ANIMALS_CHOICES, verbose_name='Категория животного')
 
     def __str__(self):
         return f"{self.title} {self.description} ({self.category})"
+
+    def get_absolute_url(self):
+        return f'/{self.id}'
 
 
 

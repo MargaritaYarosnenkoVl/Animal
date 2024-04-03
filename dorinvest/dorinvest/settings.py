@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'animal_show.apps.AnimalShowConfig',
+    'django_filters',
+    'django.forms',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +134,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar_YourCustomToolbarConfig': [
+            {'items': ['Image',]},
+        ],
+    }
+}
