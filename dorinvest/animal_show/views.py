@@ -1,13 +1,16 @@
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView
+from django.db import IntegrityError
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, DetailView
 from django.shortcuts import render
 from django.forms import modelformset_factory
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect, request
+from django.views.generic.edit import FormMixin
 
-from .forms import ShowForm, ImageForm, FullForm, AnimalsForm
-from .models import Show, Image, Animals
+from .forms import ShowForm
+from .models import Show
 
 
 class ShowList(ListView):
@@ -15,18 +18,63 @@ class ShowList(ListView):
     ordering = 'id'
     template_name = 'show.html'
     context_object_name = 'show'
+    form_class = ShowForm
 
 
-
-class ShowAdd(CreateView):
-    model = Show
-    form_class = FullForm
-    template_name = 'add.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ShowForm()
+        return context
 
     def get_initial(self):
         initial = super().get_initial()
         initial['user'] = self.request.user
         return initial
+
+
+
+class ShowAdd(CreateView):
+    model = Show
+    form_class = ShowForm
+    template_name = 'add.html'
+
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['user'] = self.request.user
+        return initial
+
+
+class ShowDetail(FormMixin, DetailView):
+    model = Show
+    template_name = 'show.html'
+    context_object_name = 'show_d'
+    form_class = ShowForm
+    queryset = Show.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        pk = self.kwargs.get('pk')
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form, **kwargs):
+        try:
+            self.object = form.save(commit=False)
+            self.object.user = self.request.user
+            self.object.post = self.get_object()
+            self.object.save()
+            return super().form_valid(form)
+        except IntegrityError:
+            return redirect('/')
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('', kwargs={'pk': self.get_object().id})
+
+
+
 #
 #     def post(self, request, *args, **kwargs):
 #         ImageFormSet = modelformset_factory(Image, form=ImageForm, extra=3)
