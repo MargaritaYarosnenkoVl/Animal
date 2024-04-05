@@ -1,10 +1,37 @@
 {% load static %}
 
 {% block content %}
-привет
-{% for s in show%}
-{{s.title}}
-{{ s.banner|safe }}
-{{ s.animals|safe }}
+
+
+{{show.title}}
+{{show.banner|safe}}
+{{show.info}}
+{{show.logo|safe}}
+{{show.contacts}}
+{{show.last_images|safe}}
+{{show.date}}
+{{show.locations}}
+{{show.social_links}}
+
+{% if show.is_published %}
+    {{ show.result_images|safe }}
+    {{ show.result }}
+
+{% endif %}
+
+{% for animal in animals %}
+
+    {{ animal.name }}
+    <img src="{{ animal.image_animals.url }}" alt="{{ animal.name }}">
+    {{ animal.description }}
+
 {% endfor %}
+
+<!-- Форма обратной связи -->
+<form method="post" action="{% url 'feedback' %}">
+    {% csrf_token %}
+    {{ feedback_form.as_p }}
+    <button type="submit" class="btn btn-dark">Отправить обратную связь</button>
+</form>
+
 {% endblock %}

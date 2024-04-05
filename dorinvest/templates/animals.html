@@ -1,5 +1,5 @@
 
-{% block title %}Добавление новой выставки {% endblock %}
+{% block title %}Новое животное{% endblock %}
 
 
 {% block content %}
@@ -7,7 +7,7 @@
         {% csrf_token %}
 
         {{ form.media }}
-
+       {{ myform.beatles }}<div><div>
         {{ form.as_p }}
 
         <input type="submit" value="Сохранить">
