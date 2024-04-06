@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'animal_show.apps.AnimalShowConfig',
-    'animal_show.services',
     'django_filters',
     'django.forms',
 ]

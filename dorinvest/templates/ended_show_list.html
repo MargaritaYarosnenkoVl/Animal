@@ -1,0 +1,14 @@
+{% load static %}
+{% block content %}
+{% for show in endedshow%}
+<img src="media/{{ show.image }}" alt="" class="card-img-top">
+
+{{show.title}}
+
+{{show.date}}
+{{show.count}}
+{{show.animal_housing}}
+
+{% endfor %}
+{% endblock %}
+

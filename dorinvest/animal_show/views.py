@@ -10,61 +10,12 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, request
 from django.views.generic.edit import FormMixin
 
-from .forms import ShowForm, AnimalsForm, FeedbackCreateForm
-from .models import Show, Animals, Feedback
-from .services.email import send_contact_email_message
-from .services.utils import get_client_ip
+from .forms import ShowForm, AnimalsForm, FeedbackCreateForm, EndedShowForm
+from .models import Show, Animals, Feedback, EndedShow
 
 
-class ShowList(ListView):
-    model = Show
-    ordering = 'id'
-    template_name = 'show.html'
-    context_object_name = 's'
-    form_class = ShowForm
-
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = ShowForm()
-        return context
-
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['user'] = self.request.user
-        return initial
-
-
-
-class ShowAdd(CreateView):
-    model = Show
-    form_class = ShowForm
-    template_name = 'add.html'
-
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['user'] = self.request.user
-        return initial
-
-
-class AnimalsAdd(CreateView):
-    model = Animals
-    form_class = AnimalsForm
-    template_name = 'animals.html'
-
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['user'] = self.request.user
-        return initial
-
-    def form_valid(self, form):
-        user = self.request.user
-        self.object = form.save(commit=False)
-        self.object.user = user
-        self.object.save()
-        return super().form_valid(form)
-
-
+# from .services.email import send_contact_email_message
+# from .services.utils import get_client_ip
 
 
 class ShowDetail(FormMixin, DetailView):
@@ -73,41 +24,59 @@ class ShowDetail(FormMixin, DetailView):
     context_object_name = 'show'
     form_class = ShowForm
     queryset = Show.objects.all()
-    success_message = 'Ваше письмо успешно отправлено администрации сайта'
-    success_url = reverse_lazy('show')
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         show = self.get_object()
         animals = show.animals.all()
+        banners = show.banners.all()
+        stores = show.stores.all()
+        locations = show.locations.all()
+        social_links = show.social_links.all()
+        partners = show.partners.all()
         context['animals'] = animals
+        context['banners'] = banners
+        context['stores'] = stores
+        context['locations'] = locations
+        context['social_links'] = social_links
+        context['partners'] = partners
         context['feedback_form'] = FeedbackCreateForm()
         return context
 
 
-
-class FeedbackCreateView(SuccessMessageMixin, CreateView):
+class FeedbackCreate(CreateView):
     model = Feedback
     form_class = FeedbackCreateForm
-    success_message = 'Ваше письмо успешно отправлено администрации сайта'
     template_name = 'show.html'
-    extra_context = {'title': 'Контактная форма'}
-    # success_url = reverse_lazy('detail')
+    success_url = reverse_lazy('/')
 
 
-    def form_valid(self, form):
-        if form.is_valid():
-            feedback = form.save(commit=False)
-            feedback.ip_address = get_client_ip(self.request)
-            if self.request.user.is_authenticated:
-                feedback.user = self.request.user
-            send_contact_email_message(feedback.subject, feedback.email, feedback.content, feedback.ip_address, feedback.user_id)
-        return super().form_valid(form)
+class EndedShowList(ListView):
+    model = EndedShow
+    ordering = '-id'
+    template_name = 'ended_show_list.html'
+    context_object_name = 'endedshow'
+    paginate_by = 6
+    form_class = EndedShowForm
 
-    def get_success_url(self):
-        # Возвращаем URL текущего объекта, если он доступен
-        if hasattr(self, 'object') and self.object is not None:
-            return reverse('detail', kwargs={'pk': self.object.pk})
-        # Или возвращаем URL по умолчанию
-        return reverse('default_url')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = EndedShowForm
+        return context
+
+
+
+class EndedShowDetail(FormMixin, DetailView):
+    model = EndedShow
+    template_name = 'EndedShow.html'
+    context_object_name = 'ended_show'
+    form_class = EndedShowForm
+    queryset = EndedShow.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ended_show = self.get_object()
+        photoreport = ended_show.photoreport.all()
+        context['photoreport'] = photoreport
+        return context
