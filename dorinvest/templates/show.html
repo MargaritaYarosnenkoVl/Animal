@@ -3,6 +3,7 @@
 {% block content %}
 
 
+
 {{show.title}}
 {{show.info}}
 {{show.quantity}}
@@ -50,7 +51,7 @@
 
 
 <!-- Форма обратной связи -->
-<form method="post" enctype="multipart/form-data">
+<form method="POST">
     {% csrf_token %}
     {{ feedback_form.as_p }}
     <button type="submit" class="btn btn-dark">Отправить обратную связь</button>
