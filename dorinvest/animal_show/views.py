@@ -47,35 +47,35 @@ class ShowDetail(FormMixin, DetailView):
         context['feedback_form'] = FeedbackCreateForm()
         return context
 
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        pk = self.kwargs.get('pk')
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+    # def post(self, request, *args, **kwargs):
+    #     form = self.get_form()
+    #     pk = self.kwargs.get('pk')
+    #     if form.is_valid():
+    #         return self.form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
+    #
+    # def form_valid(self, form, **kwargs):
+    #     try:
+    #         self.object = form.save(commit=False)
+    #         self.object.user = self.request.user
+    #         self.object.post = self.get_object()
+    #         self.object.save()
+    #         return super().form_valid(form)
+    #     except IntegrityError:
+    #         return redirect('show/')
+    #
+    # def get_success_url(self, **kwargs):
+    #     return reverse_lazy('show', kwargs={'slug': self.object.show.slug})
 
-    def form_valid(self, form, **kwargs):
-        try:
-            self.object = form.save(commit=False)
-            self.object.user = self.request.user
-            self.object.post = self.get_object()
-            self.object.save()
-            return super().form_valid(form)
-        except IntegrityError:
-            return redirect('show/')
+
+class FeedbackCreate(CreateView):
+    model = Feedback
+    form_class = FeedbackCreateForm
+    template_name = 'show.html'
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('show', kwargs={'slug': self.object.show.slug})
-
-
-# class FeedbackCreate(CreateView):
-#     model = Feedback
-#     form_class = FeedbackCreateForm
-#     template_name = 'show.html'
-#
-#     def get_success_url(self, **kwargs):
-#         return reverse_lazy('show', kwargs={'slug': self.object.show.slug})
 
 
 class EndedShowList(ListView):
