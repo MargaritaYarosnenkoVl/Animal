@@ -65,6 +65,7 @@ class Feedback(models.Model):
     """
     name = models.CharField(max_length=255, verbose_name='Имя пользователя')
     user_phone = models.CharField(max_length=25, verbose_name='Телефон пользователя')
+    show = models.ForeignKey(Show, on_delete=models.CASCADE, related_name='feedbacks', verbose_name='Выставка', null=True, blank=True)
 
     # subject = models.CharField(max_length=255, verbose_name='Тема письма')
     # email = models.EmailField(max_length=255, verbose_name='Электронный адрес (email)')

@@ -12,6 +12,7 @@ from django.views.generic.edit import FormMixin
 
 from .forms import ShowForm, AnimalsForm, FeedbackCreateForm, EndedShowForm
 from .models import Show, Animals, Feedback, EndedShow
+from django.urls import reverse
 
 
 # from .services.email import send_contact_email_message
@@ -22,19 +23,21 @@ class ShowDetail(FormMixin, DetailView):
     model = Show
     template_name = 'show.html'
     context_object_name = 'show'
-    form_class = ShowForm
+    form_class = FeedbackCreateForm
     queryset = Show.objects.all()
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         show = self.get_object()
+
         animals = show.animals.all()
         banners = show.banners.all()
         stores = show.stores.all()
         locations = show.locations.all()
         social_links = show.social_links.all()
         partners = show.partners.all()
+        context['title'] = context['show']
         context['animals'] = animals
         context['banners'] = banners
         context['stores'] = stores
@@ -44,12 +47,35 @@ class ShowDetail(FormMixin, DetailView):
         context['feedback_form'] = FeedbackCreateForm()
         return context
 
+    # def post(self, request, *args, **kwargs):
+    #     form = self.get_form()
+    #     pk = self.kwargs.get('pk')
+    #     if form.is_valid():
+    #         return self.form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
+    #
+    # def form_valid(self, form, **kwargs):
+    #     try:
+    #         self.object = form.save(commit=False)
+    #         self.object.user = self.request.user
+    #         self.object.post = self.get_object()
+    #         self.object.save()
+    #         return super().form_valid(form)
+    #     except IntegrityError:
+    #         return redirect('show/')
+    #
+    # def get_success_url(self, **kwargs):
+    #     return reverse_lazy('show', kwargs={'slug': self.object.show.slug})
+
 
 class FeedbackCreate(CreateView):
     model = Feedback
     form_class = FeedbackCreateForm
     template_name = 'show.html'
-    success_url = reverse_lazy('/')
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('show', kwargs={'slug': self.object.show.slug})
 
 
 class EndedShowList(ListView):
@@ -59,12 +85,12 @@ class EndedShowList(ListView):
     context_object_name = 'endedshow'
     paginate_by = 6
     form_class = EndedShowForm
+    extra_context = {'title': 'Прошедшие выставки'}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = EndedShowForm
         return context
-
 
 
 class EndedShowDetail(FormMixin, DetailView):
