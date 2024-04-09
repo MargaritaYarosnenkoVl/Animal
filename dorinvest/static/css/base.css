@@ -1,0 +1,151 @@
+@font-face {
+    font-family: "RobotoCondensed Medium";
+    src: url("../fonts/RobotoCondensed-Medium.ttf");
+}
+@font-face {
+    font-family: "RobotoCondensed Regular";
+    src: url("../fonts/RobotoCondensed-Regular.ttf");
+}
+
+.base-page {
+    margin: 0 auto;
+    max-width: 1440px;
+    font-family: "RobotoCondensed Medium", "Open Sans";
+}
+
+
+
+.base-header {
+    background-color: #EFEFEF;
+    display: flex;
+    padding: 1.4% 6.5%;
+}
+.base-header > img {
+    margin-right: 9%;
+    margin-top: 0.7%;
+}
+.base-header > nav {
+    width: 100%;
+}
+.navigation {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 23px;
+}
+.navigation > li {
+    width: 155px;
+}
+.navigation > li:not(:last-child) {
+    margin-right: 5%;
+}
+
+
+
+.base-footer {
+    position: relative;
+    width: 100%;
+    height: 484px;
+    padding: 97px 6% 10px 6%;
+    background-image: url('../img/footer-background.png');
+    background-position: left top;
+    background-repeat: no-repeat;
+    font-family: "RobotoCondensed Regular", "Open Sans";
+}
+.base-footer::after {
+    position: absolute;
+    content: '';
+    top: 58%;
+    left: 22%;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/footer-steps.png');
+    background-repeat: no-repeat;
+}
+
+.footer-content-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+}
+
+.footer-left {
+    width: 50%;
+    margin-top: 91px;
+}
+.footer-left-info {
+    position: relative;
+    font-size: 20px;
+    margin-left: 43px;
+    line-height: 130%;
+    letter-spacing: 1.2px;
+}
+.footer-left-info > p:last-child {
+    margin-top: 10px;
+    letter-spacing: 2.4px;
+}
+.footer-left-info::before {
+    position: absolute;
+    content: '';
+    top: 5px;
+    left: -35px;
+    width: 28px;
+    height: 37px;
+    background-image: url('../img/geo_icon.png');
+    background-repeat: no-repeat;
+}
+.footer-socials {
+    margin-top: 41px;
+    margin-left: 1.4%;
+}
+.footer-socials > h3 {
+    font-size: 20px;
+    letter-spacing: 1.3px;
+}
+.footer-socials > ul {
+    margin-top: 19px;
+    margin-left: 35px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 24px;
+    grid-auto-flow: column;
+    font-size: 15px;
+    line-height: 130%;
+    letter-spacing: 1px;
+}
+.footer-socials > ul > li {position: relative;}
+.footer-socials > ul > li::before {
+    position: absolute;
+    content: '';
+    top: -8px;
+    left: -40px;
+    width: 33px;
+    height: 33px;
+    background-image: url('../img/VK.png');
+    background-repeat: no-repeat;
+}
+
+
+.footer-right {
+    width: 50%;
+    position: relative;
+}
+.footer-right > h3 {
+    text-align: center;
+    margin-left: 18%;
+    font-size: 30px;
+    line-height: 130%;
+}
+.footer-sponsors {
+    display: flex;
+    margin-left: 14%;
+    margin-top: 39px;
+    width: 100%;
+    justify-content: space-between;
+}
+.footer-right > img {
+    position: absolute;
+    right: 2.5%;
+    bottom: 25px;
+}
