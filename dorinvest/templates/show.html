@@ -1,60 +1,61 @@
+{% extends 'base.html' %}
+
 {% load static %}
 
 {% block content %}
 
 
-
-{{show.title}}
-{{show.info}}
-{{show.quantity}}
-{{show.organizer}}
-{{show.phone}}
-{{show.date}}
-{{show.locations}}
-{{show.social_links}}
-
-
-{% for animal in animals %}
-    {{ animal.name }}
-    <img src="{{ animal.image_animals.url }}" alt="{{ animal.name }}">
-    {{ animal.description }}
-{% endfor %}
-
-{% for banner in banners %}
-    {{ banner.name }}
-    <img src="{{ banner.banner.url }}" alt="{{ banner.name }}">
-{% endfor %}
-
-{% for story in stores %}
-    {{ story.name }}
-    <img src="{{ story.photo.url }}" alt="{{ story.name }}">
-    {{ story.story }}
-{% endfor %}
-
-{% for location in locations %}
-    {{ location.place }}
-    {{ location.phone }}
-    {{ location.duration }}
-{% endfor %}
-
-{% for social_link in social_links %}
-    {{ social_link.name }}
-    <a href="{{ social_logo.url }}">{{ social_link.name }}</a>
-    {{ social_link.social_link }}
-{% endfor %}
-
-{% for partner in partners %}
-    {{ partner.name }}
-    <img src="{{ partner.logo.url }}" alt="{{ partner.name }}">
-    {{ partner.partners_link }}
-{% endfor %}
+    {{show.title}}
+    {{show.info}}
+    {{show.quantity}}
+    {{show.organizer}}
+    {{show.phone}}
+    {{show.date}}
+    {{show.locations}}
+    {{show.social_links}}
 
 
-<!-- Форма обратной связи -->
-<form method="POST">
-    {% csrf_token %}
-    {{ feedback_form.as_p }}
-    <button type="submit" class="btn btn-dark">Отправить обратную связь</button>
-</form>
+    {% for animal in animals %}
+        {{ animal.name }}
+        <img src="{{ animal.image_animals.url }}" alt="{{ animal.name }}">
+        {{ animal.description }}
+    {% endfor %}
+
+    {% for banner in banners %}
+        {{ banner.name }}
+        <img src="{{ banner.banner.url }}" alt="{{ banner.name }}">
+    {% endfor %}
+
+    {% for story in stores %}
+        {{ story.name }}
+        <img src="{{ story.photo.url }}" alt="{{ story.name }}">
+        {{ story.story }}
+    {% endfor %}
+
+    {% for location in locations %}
+        {{ location.place }}
+        {{ location.phone }}
+        {{ location.duration }}
+    {% endfor %}
+
+    {% for social_link in social_links %}
+        {{ social_link.name }}
+        <a href="{{ social_logo.url }}">{{ social_link.name }}</a>
+        {{ social_link.social_link }}
+    {% endfor %}
+
+    {% for partner in partners %}
+        {{ partner.name }}
+        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}">
+        {{ partner.partners_link }}
+    {% endfor %}
+
+
+    <!-- Форма обратной связи -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ feedback_form.as_p }}
+        <button type="submit" class="btn btn-dark">Отправить обратную связь</button>
+    </form>
 
 {% endblock %}

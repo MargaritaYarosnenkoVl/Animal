@@ -1,14 +1,16 @@
+{% extends 'base.html' %}
+
 {% load static %}
+
 {% block content %}
-{% for show in endedshow%}
-<img src="media/{{ show.image }}" alt="" class="card-img-top">
-
-{{show.title}}
-
-{{show.date}}
-{{show.count}}
-{{show.animal_housing}}
-
-{% endfor %}
+            {% for show in endedshow %}
+                <div>img: <img src="media/{{ show.image }}" alt="{{ show.image }}" class="card-img-top" /></div>
+                <div>show.title: {{ show.title }}</div>
+                <div>show.date: {{ show.date }}</div>
+                <div>show.count: {{ show.count }}</div>
+                <div>show.animal_housing: {{ show.animal_housing }}</div>
+                <div>show.descriptions: {{ show.descriptions }}</div>
+                <div>show.slug: {{ show.slug }}</div>
+            {% endfor %}
 {% endblock %}
 
