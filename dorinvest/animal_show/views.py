@@ -3,8 +3,8 @@ from django.shortcuts import redirect, render
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
-from .forms import FeedbackCreateForm, EndedShowForm
-from .models import Show, EndedShow
+from .forms import FeedbackCreateForm, EndedShowForm, AnimalsForm
+from .models import Show, EndedShow, Animals
 
 
 class ShowDetail(FormMixin, DetailView):
@@ -69,7 +69,6 @@ class EndedShowList(ListView):
     paginate_by = 6
     form_class = EndedShowForm
 
-
     def get_context_data(self, **kwargs):
         """Переопределяет метод get_context_data для добавления дополнительных данных в контекст шаблона.
     Включает в себя форму для создания новой записи о прошедшей выставке"""
@@ -78,5 +77,31 @@ class EndedShowList(ListView):
         return context
 
 
+class AnimalList(ListView):
+    """Список животных"""
+    model = Animals
+    ordering = 'id'
+    template_name = 'animals_list.html'
+    context_object_name = 'animals'
+    form_class = AnimalsForm
+
+    def get_context_data(self, **kwargs):
+        """"""
+        context = super().get_context_data(**kwargs)
+        context['form'] = AnimalsForm
+        return context
 
 
+class AnimalDetail(DetailView):
+    """Карточка животного"""
+    model = Animals
+    ordering = 'id'
+    template_name = 'animals.html'
+    context_object_name = 'animal'
+    form_class = AnimalsForm
+
+    def get_context_data(self, **kwargs):
+        """"""
+        context = super().get_context_data(**kwargs)
+        context['form'] = AnimalsForm
+        return context

@@ -1,0 +1,16 @@
+{% load static %}
+
+{% block content %}
+
+    <p>{{animal.name}}</p>
+    <p><img src="{{ animal.image_animals.url }}" alt="" class="card-img-top"></p>
+    <p>{{animal.description}}</p>
+
+<p>Где живет животное: {{animal.place}}</p>
+<p>Год рождения: {{animal.birthday}}</p>
+<p>Шерсть животного: {{animal.wool}}</p>
+<p>Цвет животного: {{animal.color}}</p>
+<p>Активность животного: {{animal.activity}}</p>
+<p>Характер животного: {{animal.friendly}}</p>
+
+{% endblock %}

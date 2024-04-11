@@ -47,7 +47,14 @@ class Animals(models.Model):
 
     image_animals = models.ImageField(upload_to='images/', verbose_name='Фотография животного')
     name = models.CharField(max_length=255, verbose_name='Имя животного')
+    short_description = models.CharField(max_length=255, verbose_name='Короткое описание животного')
     description = models.TextField(verbose_name='Описание животного')
+    place = models.CharField(max_length=255, verbose_name='Где живет животное')
+    birthday = models.CharField(max_length=255, verbose_name='Год рождения')
+    wool = models.CharField(max_length=255, verbose_name='Шерсть животного')
+    color = models.CharField(max_length=255, verbose_name='Цвет животного')
+    activity = models.CharField(max_length=255, verbose_name='Активность животного')
+    friendly = models.CharField(max_length=255, verbose_name='Характер животного')
     category = models.CharField(max_length=3, choices=ANIMALS_CHOICES, verbose_name='Категория животного')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
@@ -76,7 +83,7 @@ class Feedback(models.Model):
         verbose_name = 'Обратная связь'
         verbose_name_plural = 'Обратная связь'
         ordering = ['id']
-        # db_table = 'app_feedback'
+
 
     def get_absolute_url(self):
         return f'/{self.slug}'
