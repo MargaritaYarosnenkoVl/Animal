@@ -6,5 +6,3 @@ class AnimalShowConfig(AppConfig):
     name = 'animal_show'
     verbose_name = 'Выставка животных'
 
-    def ready(self):
-        import animal_show.signals

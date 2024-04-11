@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Show, Animals, Feedback, Banner, Story, Location, SociaLinks, Partners, EndedShow, Photoreport
+from .models import Show, Animals, Feedback, Banner, Story, Location, SociaLinks, Partners, EndedShow, Photoreport, \
+    PhotoreprtShow, AnimalImage, Image
 
 from django import forms
 from django.contrib import admin
@@ -13,19 +14,24 @@ class ShowAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
+class AnimalImageInline(admin.TabularInline):
+    model = AnimalImage
+    verbose_name = "Фотография животного"
+    verbose_name_plural = "Фотографии животного"
+    extra = 1
+
+
 class AnimalsAdmin(admin.ModelAdmin):
     """ Админ-панель модели животных"""
+    inlines = [AnimalImageInline]
     list_display = ('name', 'image_animals', 'description', 'category')
     list_display_links = ('name',)
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
 
 
-
-# class FeedbackAdmin(admin.ModelAdmin):
-#     """ Админ-панель модели профиля"""
-#     list_display = ('email', 'ip_address', 'user')
-#     list_display_links = ('email', 'ip_address')
+class ImageAdmin(admin.ModelAdmin):
+    pass
 
 
 class FeedbackAdmin(admin.ModelAdmin):
@@ -64,34 +70,19 @@ class PartnersAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
 
 
-# class EndedShowAdmin(admin.ModelAdmin):
-#     """ Админ-панель модели прошедших выставок"""
-#     prepopulated_fields = {'slug': ('title',)}
-#
-#     def save_related(self, request, form, formsets, change):
-#         super().save_related(request, form, formsets, change)
-#         if not change:
-#             form.instance.photoreport.clear()
-class EndedShowAdminForm(forms.ModelForm):
-    class Meta:
-        model = EndedShow
-        fields = '__all__'
+class PhotoreprtShowInline(admin.TabularInline):
+    model = PhotoreprtShow
+    verbose_name = "Фотоотчет"
+    verbose_name_plural = "Фотоотчет"
+    extra = 1
 
-    def clean(self):
-        cleaned_data = super().clean()
-        if not self.instance.pk:
-            self.instance.photoreport.clear()
-        return cleaned_data
 
 class EndedShowAdmin(admin.ModelAdmin):
-    form = EndedShowAdminForm
+    inlines = [PhotoreprtShowInline]
     prepopulated_fields = {'slug': ('title',)}
 
-    def save_related(self, request, form, formsets, change):
-        super().save_related(request, form, formsets, change)
-        if not change:
-            form.instance.photoreport.clear()
-
+class PhotoreportAdmin(admin.ModelAdmin):
+    pass
 
 
 admin.site.register(Show, ShowAdmin)
@@ -103,7 +94,8 @@ admin.site.register(Location, LocationAdmin)
 admin.site.register(SociaLinks, SociaLinksAdmin)
 admin.site.register(Partners, PartnersAdmin)
 admin.site.register(EndedShow, EndedShowAdmin)
-admin.site.register(Photoreport)
+admin.site.register(Photoreport, PhotoreportAdmin)
+admin.site.register(Image, ImageAdmin)
 
 
 

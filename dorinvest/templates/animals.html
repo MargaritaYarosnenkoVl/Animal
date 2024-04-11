@@ -13,4 +13,15 @@
 <p>Активность животного: {{animal.activity}}</p>
 <p>Характер животного: {{animal.friendly}}</p>
 
+
+<div class="animal-images">
+        {% for image in animal_images %}
+            <img src="{{ image.image.images.url }}" alt="{{ image.animal.name }}">
+        {% empty %}
+            <p>Нет дополнительных фотографий.</p>
+        {% endfor %}
+    </div>
+
+
+
 {% endblock %}

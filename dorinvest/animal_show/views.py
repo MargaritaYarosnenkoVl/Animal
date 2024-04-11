@@ -4,7 +4,7 @@ from django.utils.text import slugify
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 from .forms import FeedbackCreateForm, EndedShowForm, AnimalsForm
-from .models import Show, EndedShow, Animals
+from .models import Show, EndedShow, Animals, Photoreport
 
 
 class ShowDetail(FormMixin, DetailView):
@@ -74,6 +74,7 @@ class EndedShowList(ListView):
     Включает в себя форму для создания новой записи о прошедшей выставке"""
         context = super().get_context_data(**kwargs)
         context['form'] = EndedShowForm
+        context['photoreports'] = Photoreport.objects.all()
         return context
 
 
@@ -104,4 +105,5 @@ class AnimalDetail(DetailView):
         """"""
         context = super().get_context_data(**kwargs)
         context['form'] = AnimalsForm
+        context['animal_images'] = self.object.animal.all()
         return context

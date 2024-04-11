@@ -70,6 +70,24 @@ class Animals(models.Model):
         return f'/{self.id}'
 
 
+class Image (models.Model):
+    images = models.ImageField(upload_to='images_animal/', verbose_name='Фотографии животного')
+    def __str__(self):
+        return f"{self.images}"
+
+    class Meta:
+        verbose_name = 'фотография животного'
+        verbose_name_plural = 'фотографии животных'
+        ordering = ['id']
+
+
+class AnimalImage(models.Model):
+    animal = models.ForeignKey(Animals, on_delete=models.CASCADE, related_name='animal',
+                                    verbose_name='Животное')
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='images_animals',
+                                   verbose_name='Другие фотографии животного')
+
+
 class Feedback(models.Model):
     """
     Модель обратной связи
@@ -172,7 +190,7 @@ class EndedShow(models.Model):
     descriptions = models.TextField(verbose_name='Информация по прошедшей выставке')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
-    photoreport = models.ManyToManyField('Photoreport', related_name='photoreport', verbose_name='Фотоотчет с выставки')
+    # photoreport = models.ManyToManyField('Photoreport', related_name='photoreport', verbose_name='Фотоотчет с выставки')
 
     class Meta:
         verbose_name = 'Прошедшие выставки'
@@ -198,4 +216,8 @@ class Photoreport(models.Model):
 
 
 
-
+class PhotoreprtShow(models.Model):
+    photoreport = models.ForeignKey(Photoreport, on_delete=models.CASCADE, related_name='photoreport',
+                                    verbose_name='Фотоотчет с выставки')
+    ended_show = models.ForeignKey(EndedShow, on_delete=models.CASCADE, related_name='ended_show',
+                                    verbose_name='Прошедшие выставки')
