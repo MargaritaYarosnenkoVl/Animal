@@ -5,3 +5,6 @@ class AnimalShowConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'animal_show'
     verbose_name = 'Выставка животных'
+
+    def ready(self):
+        import animal_show.signals

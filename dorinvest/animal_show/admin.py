@@ -64,9 +64,34 @@ class PartnersAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
 
 
+# class EndedShowAdmin(admin.ModelAdmin):
+#     """ Админ-панель модели прошедших выставок"""
+#     prepopulated_fields = {'slug': ('title',)}
+#
+#     def save_related(self, request, form, formsets, change):
+#         super().save_related(request, form, formsets, change)
+#         if not change:
+#             form.instance.photoreport.clear()
+class EndedShowAdminForm(forms.ModelForm):
+    class Meta:
+        model = EndedShow
+        fields = '__all__'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if not self.instance.pk:
+            self.instance.photoreport.clear()
+        return cleaned_data
+
 class EndedShowAdmin(admin.ModelAdmin):
-    """ Админ-панель модели прошедших выставок"""
+    form = EndedShowAdminForm
     prepopulated_fields = {'slug': ('title',)}
+
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        if not change:
+            form.instance.photoreport.clear()
+
 
 
 admin.site.register(Show, ShowAdmin)
