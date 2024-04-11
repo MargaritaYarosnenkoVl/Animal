@@ -37,8 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ckeditor',
-    'ckeditor_uploader',
     'animal_show.apps.AnimalShowConfig',
     'django_filters',
     'django.forms',
@@ -133,49 +131,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_IMAGE_BACKEND = "pillow"
-
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar_YourCustomToolbarConfig': [
-            {'items': ['Image',]},
-        ],
-    }
-}
-
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = '465'
-EMAIL_USE_SSL = True
-
-EMAIL_HOST_USER = 'yaroshenkomargaritka@yandex.ru'
-EMAIL_HOST_PASSWORD = 'ytwqihycfvcztwhx'
-
-EMAIL_SERVER = EMAIL_HOST_USER
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_ADMIN = ['_lampochka@mail.ru']
-
-
-
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-# EMAIL_HOST = 'smtp.yandex.ru'
-# EMAIL_PORT = 465
-# EMAIL_HOST_USER = 'yaroshenkomargaritka'
-# EMAIL_HOST_PASSWORD = 'ytwqihycfvcztwhx'
-#
-# EMAIL_SERVER = EMAIL_HOST_USER
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-# EMAIL_ADMIN = ['_lampochka@mail.ru']
-# EMAIL_USE_SSL = True
-# EMAIL_FROM = 'yaroshenkomargaritka@yandex.ru'
-#
-# SERVER_EMAIL = 'yaroshenkomargaritka@yandex.ru'
 
 
 
