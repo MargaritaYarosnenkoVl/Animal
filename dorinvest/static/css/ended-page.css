@@ -1,0 +1,120 @@
+.ended-page {
+    margin: 0 6%;
+}
+
+.ended-page_adress {
+    margin-top: 21px;
+    font-size: 16px;
+    position: relative;
+}
+
+.ended-page_adress span {
+    margin-left: 36px;
+}
+
+.ended-page_adress span::before {
+    position: absolute;
+    content: '';
+    top: 2px;
+    left: 69px;
+    width: 14px;
+    height: 14px;
+    background-image: url('../img/page_adress_figure.png');
+    background-repeat: no-repeat;
+}
+
+.ended-page_title {
+    font-size: 34px;
+    text-align: center;
+    margin-top: 18px;
+    margin-left: 30px;
+}
+
+.ended-page_shows-wrapper {
+    margin: 105px -0.5% 105px -0.4%;
+}
+.ended-page_shows-wrapper > div {
+    margin-bottom: 32px;
+}
+.ended-page_show {
+    position: relative;
+    display: flex;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgb(50, 160, 40);
+    background-color: #ffffff;
+}
+.ended-page_show > img {
+    width: 413px;
+    height: 222px;
+    object-fit: cover;
+    border-radius: 17px;
+}
+.ended-page_show_info {
+    margin-left: 1.7%;
+    margin-top: 17px;
+    font-size: 24px;
+    line-height: 150%;
+}
+
+.ended-page_show_info > h2 {
+    font-size: 30px;
+}
+.ended-page_show_info_date {
+    margin-top: 24px;
+}
+.ended-page_show_info_count {
+    margin-top: -3px;
+}
+.ended-page_show_info_housing {
+    margin-top: -3px;
+}
+
+
+.ended-page_rotate_button {
+    position: absolute;
+    right: 8%;
+    top: 70px;
+    transition: transform 15s ease-out;
+}
+.ended-page_rotate_button img.rotated {
+    transform: rotate(90deg);
+}
+
+
+.ended-page_show_description {
+    overflow: hidden;
+    transition: max-height 1s ease-out, padding 0.5s ease-out;
+    max-height: 0;
+    position: relative;
+    z-index: -1;
+    top: -19px;
+    padding: 0 2.7%;
+    background-color: #F8F8F8;
+    border: 1px solid rgb(50, 160, 40);
+    border-top-style: none;
+    border-radius: 0 0 17px 17px;
+    font-size: 20px;
+    line-height: 130%;
+}
+.ended-page_show_description.active {
+    max-height: 300vh;
+    padding: 48px 2.7% 5px 2.7%;
+}
+
+
+
+.ended-page_show_description p {
+    margin-bottom: 27px;
+}
+
+.ended-page_show_photoreport > h3 {
+    margin-top: 34px;
+}
+.ended-page_show_photoreport_photos {
+    margin-top: 18px;
+}
+.ended-page_show_photoreport_photos > img {
+    height: 252px;
+    border-radius: 17px;
+    margin-bottom: 18px;
+}

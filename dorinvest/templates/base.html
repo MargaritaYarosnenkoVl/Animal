@@ -1,7 +1,7 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/null.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
-
+{% block extra_css %}{% endblock %}
 
 
 <div class="base-page">
@@ -49,4 +49,6 @@
     </footer>
 
 </div>
+
+{% block extra_js %}{% endblock %}
 
