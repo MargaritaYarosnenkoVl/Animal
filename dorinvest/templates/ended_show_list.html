@@ -21,7 +21,7 @@
             {% for show in endedshow %}
                 <div>
                     <div class="ended-page_show">
-                        <img src="media/{{ show.image }}" alt="{{ show.image }}" class="card-img-top" />
+                        <img src="{{ show.image.url }}" alt="{{ show.image }}" class="card-img-top" />
                         <div class="ended-page_show_info">
                             <h2>{{ show.title }}</h2>
                             <p class="ended-page_show_info_date">Дата проведения: <span>{{ show.date }}</span></p>
@@ -32,15 +32,15 @@
                             <img src="{% static 'img/ended-show_rotate-button.png' %}" alt="вращающаяся кнопка">
                         </div>
                     </div>
-                    {% if show.descriptions or show.photoreport %}
+                    {% if show.descriptions or photoreports %}
                         <div class="ended-page_show_description">
                             {{ show.descriptions|linebreaks }}
                         
-                            {% if show.photoreport %}
+                            {% if photoreports %}
                                 <div class="ended-page_show_photoreport">
                                     <h3>Фотоотчет</h3>
                                     <div class="ended-page_show_photoreport_photos">
-                                        {% for photo in show.photoreport.all %}
+                                        {% for photo in photoreports %}
                                             <img src="{{ photo.photo.url }}" alt="Фотоотчет">
                                         {% endfor %}
                                     </div>

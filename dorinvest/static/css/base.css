@@ -47,7 +47,7 @@
     height: 484px;
     padding: 97px 6% 10px 6%;
     background-image: url('../img/footer-background.png');
-    background-position: left top;
+    background-position: left 8px;
     background-repeat: no-repeat;
     font-family: "RobotoCondensed Regular", "Open Sans";
 }
@@ -60,6 +60,7 @@
     height: 206px;
     background-image: url('../img/footer-steps.png');
     background-repeat: no-repeat;
+    background-position-y: 8px;
 }
 
 .footer-content-wrapper {
