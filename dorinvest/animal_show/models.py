@@ -1,6 +1,8 @@
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
 
 
 class Show(models.Model):
@@ -13,7 +15,7 @@ class Show(models.Model):
     phone = models.CharField(max_length=20, verbose_name='Телефон')
     is_published = models.BooleanField(default=False, verbose_name='Публикация')
 
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+
     animals = models.ManyToManyField('Animals', related_name='animals', verbose_name='Животные')
     banners = models.ManyToManyField('Banner', related_name='banners', verbose_name='Баннер')
     stores = models.ManyToManyField('Story', related_name='stores', verbose_name='Счастливые истории')
@@ -30,7 +32,9 @@ class Show(models.Model):
         return f"{self.title}"
 
     def get_absolute_url(self):
-        return f'/{self.id}'
+        return reverse('show', kwargs={'slug': self.slug})
+
+
 
 
 class Animals(models.Model):
@@ -43,7 +47,14 @@ class Animals(models.Model):
 
     image_animals = models.ImageField(upload_to='images/', verbose_name='Фотография животного')
     name = models.CharField(max_length=255, verbose_name='Имя животного')
+    short_description = models.CharField(max_length=255, verbose_name='Короткое описание животного')
     description = models.TextField(verbose_name='Описание животного')
+    place = models.CharField(max_length=255, verbose_name='Где живет животное')
+    birthday = models.CharField(max_length=255, verbose_name='Год рождения')
+    wool = models.CharField(max_length=255, verbose_name='Шерсть животного')
+    color = models.CharField(max_length=255, verbose_name='Цвет животного')
+    activity = models.CharField(max_length=255, verbose_name='Активность животного')
+    friendly = models.CharField(max_length=255, verbose_name='Характер животного')
     category = models.CharField(max_length=3, choices=ANIMALS_CHOICES, verbose_name='Категория животного')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
@@ -59,29 +70,41 @@ class Animals(models.Model):
         return f'/{self.id}'
 
 
+class Image (models.Model):
+    images = models.ImageField(upload_to='images_animal/', verbose_name='Фотографии животного')
+    def __str__(self):
+        return f"{self.images}"
+
+    class Meta:
+        verbose_name = 'фотография животного'
+        verbose_name_plural = 'фотографии животных'
+        ordering = ['id']
+
+
+class AnimalImage(models.Model):
+    animal = models.ForeignKey(Animals, on_delete=models.CASCADE, related_name='animal',
+                                    verbose_name='Животное')
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='images_animals',
+                                   verbose_name='Другие фотографии животного')
+
+
 class Feedback(models.Model):
     """
     Модель обратной связи
     """
     name = models.CharField(max_length=255, verbose_name='Имя пользователя')
     user_phone = models.CharField(max_length=25, verbose_name='Телефон пользователя')
-    show = models.ForeignKey(Show, on_delete=models.CASCADE, related_name='feedbacks', verbose_name='Выставка', null=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
-    # subject = models.CharField(max_length=255, verbose_name='Тема письма')
-    # email = models.EmailField(max_length=255, verbose_name='Электронный адрес (email)')
-    # content = models.TextField(verbose_name='Содержимое письма')
-    # time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата отправки')
-    # ip_address = models.GenericIPAddressField(verbose_name='IP отправителя',  blank=True, null=True)
-    # user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Обратная связь'
         verbose_name_plural = 'Обратная связь'
         ordering = ['id']
-        db_table = 'app_feedback'
 
-    # def __str__(self):
-    #     return f'Вам письмо от {self.email}'
+
+    def get_absolute_url(self):
+        return f'/{self.slug}'
 
 
 class Banner(models.Model):
@@ -167,7 +190,7 @@ class EndedShow(models.Model):
     descriptions = models.TextField(verbose_name='Информация по прошедшей выставке')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
-    photoreport = models.ManyToManyField('Photoreport', related_name='photoreport', verbose_name='Фотоотчет с выставки')
+    # photoreport = models.ManyToManyField('Photoreport', related_name='photoreport', verbose_name='Фотоотчет с выставки')
 
     class Meta:
         verbose_name = 'Прошедшие выставки'
@@ -193,4 +216,8 @@ class Photoreport(models.Model):
 
 
 
-
+class PhotoreprtShow(models.Model):
+    photoreport = models.ForeignKey(Photoreport, on_delete=models.CASCADE, related_name='photoreport',
+                                    verbose_name='Фотоотчет с выставки')
+    ended_show = models.ForeignKey(EndedShow, on_delete=models.CASCADE, related_name='ended_show',
+                                    verbose_name='Прошедшие выставки')

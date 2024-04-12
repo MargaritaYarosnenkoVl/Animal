@@ -1,33 +1,24 @@
-from django.contrib.messages.views import SuccessMessageMixin
-from django.db import IntegrityError
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView, DetailView
-from django.shortcuts import render
-from django.forms import modelformset_factory
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.http import HttpResponseRedirect, request
+import uuid
+from django.shortcuts import redirect, render
+from django.utils.text import slugify
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
-
-from .forms import ShowForm, AnimalsForm, FeedbackCreateForm, EndedShowForm
-from .models import Show, Animals, Feedback, EndedShow
-from django.urls import reverse
-
-
-# from .services.email import send_contact_email_message
-# from .services.utils import get_client_ip
+from .forms import FeedbackCreateForm, EndedShowForm, AnimalsForm
+from .models import Show, EndedShow, Animals, Photoreport
 
 
 class ShowDetail(FormMixin, DetailView):
+    """Текущая выставка"""
     model = Show
     template_name = 'show.html'
     context_object_name = 'show'
     form_class = FeedbackCreateForm
     queryset = Show.objects.all()
 
-
     def get_context_data(self, **kwargs):
+        """Переопределяет метод get_context_data для добавления дополнительных данных в контекст шаблона.
+    Включает в себя животных, баннеры, истории, местоположения, социальные ссылки и партнеров, связанных с
+    выставкой, а также форму для создания обратной связи."""
         context = super().get_context_data(**kwargs)
         show = self.get_object()
 
@@ -37,7 +28,7 @@ class ShowDetail(FormMixin, DetailView):
         locations = show.locations.all()
         social_links = show.social_links.all()
         partners = show.partners.all()
-        context['title'] = context['show']
+
         context['animals'] = animals
         context['banners'] = banners
         context['stores'] = stores
@@ -47,62 +38,72 @@ class ShowDetail(FormMixin, DetailView):
         context['feedback_form'] = FeedbackCreateForm()
         return context
 
-    # def post(self, request, *args, **kwargs):
-    #     form = self.get_form()
-    #     pk = self.kwargs.get('pk')
-    #     if form.is_valid():
-    #         return self.form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
-    #
-    # def form_valid(self, form, **kwargs):
-    #     try:
-    #         self.object = form.save(commit=False)
-    #         self.object.user = self.request.user
-    #         self.object.post = self.get_object()
-    #         self.object.save()
-    #         return super().form_valid(form)
-    #     except IntegrityError:
-    #         return redirect('show/')
-    #
-    # def get_success_url(self, **kwargs):
-    #     return reverse_lazy('show', kwargs={'slug': self.object.show.slug})
+    def post(self, request, *args, **kwargs):
+        """Обрабатывает POST-запрос, проверяет валидность формы и вызывает метод form_valid или
+    form_invalid в зависимости от результата."""
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
+    def form_valid(self, form):
+        """Обрабатывает валидную форму, сохраняет данные формы в базу данных, генерирует уникальный slug для
+    обратной связи,если он не был предоставлен, и перенаправляет пользователя на страницу детализации выставки."""
+        form.instance.user = self.request.user
+        form.instance.show = self.get_object()
+        if not form.instance.slug:
+            form.instance.slug = slugify(form.instance.name) + '-' + uuid.uuid4().hex
+        form.save()
 
-class FeedbackCreate(CreateView):
-    model = Feedback
-    form_class = FeedbackCreateForm
-    template_name = 'show.html'
+        return redirect('show', slug=self.get_object().slug)
 
-    def get_success_url(self, **kwargs):
-        return reverse_lazy('show', kwargs={'slug': self.object.show.slug})
 
 
 class EndedShowList(ListView):
+    """Список предыдущих выставок"""
     model = EndedShow
     ordering = '-id'
     template_name = 'ended_show_list.html'
     context_object_name = 'endedshow'
     paginate_by = 6
     form_class = EndedShowForm
-    extra_context = {'title': 'Прошедшие выставки'}
 
     def get_context_data(self, **kwargs):
+        """Переопределяет метод get_context_data для добавления дополнительных данных в контекст шаблона.
+    Включает в себя форму для создания новой записи о прошедшей выставке"""
         context = super().get_context_data(**kwargs)
         context['form'] = EndedShowForm
+        context['photoreports'] = Photoreport.objects.all()
         return context
 
 
-class EndedShowDetail(FormMixin, DetailView):
-    model = EndedShow
-    template_name = 'EndedShow.html'
-    context_object_name = 'ended_show'
-    form_class = EndedShowForm
-    queryset = EndedShow.objects.all()
+class AnimalList(ListView):
+    """Список животных"""
+    model = Animals
+    ordering = 'id'
+    template_name = 'animals_list.html'
+    context_object_name = 'animals'
+    form_class = AnimalsForm
 
     def get_context_data(self, **kwargs):
+        """"""
         context = super().get_context_data(**kwargs)
-        ended_show = self.get_object()
-        photoreport = ended_show.photoreport.all()
-        context['photoreport'] = photoreport
+        context['form'] = AnimalsForm
+        return context
+
+
+class AnimalDetail(DetailView):
+    """Карточка животного"""
+    model = Animals
+    ordering = 'id'
+    template_name = 'animals.html'
+    context_object_name = 'animal'
+    form_class = AnimalsForm
+
+    def get_context_data(self, **kwargs):
+        """"""
+        context = super().get_context_data(**kwargs)
+        context['form'] = AnimalsForm
+        context['animal_images'] = self.object.animal.all()
         return context

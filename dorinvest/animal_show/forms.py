@@ -28,4 +28,10 @@ class EndedShowForm(ModelForm):
         model = EndedShow
         fields = '__all__'
 
+# class PhotoreportForm(forms.ModelForm):
+#     class Meta:
+#         model = Photoreport
+#         fields = ['photo']
+
+
 

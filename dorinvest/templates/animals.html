@@ -1,0 +1,27 @@
+{% load static %}
+
+{% block content %}
+
+    <p>{{animal.name}}</p>
+    <p><img src="{{ animal.image_animals.url }}" alt="" class="card-img-top"></p>
+    <p>{{animal.description}}</p>
+
+<p>Где живет животное: {{animal.place}}</p>
+<p>Год рождения: {{animal.birthday}}</p>
+<p>Шерсть животного: {{animal.wool}}</p>
+<p>Цвет животного: {{animal.color}}</p>
+<p>Активность животного: {{animal.activity}}</p>
+<p>Характер животного: {{animal.friendly}}</p>
+
+
+<div class="animal-images">
+        {% for image in animal_images %}
+            <img src="{{ image.image.images.url }}" alt="{{ image.animal.name }}">
+        {% empty %}
+            <p>Нет дополнительных фотографий.</p>
+        {% endfor %}
+    </div>
+
+
+
+{% endblock %}

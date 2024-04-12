@@ -1,0 +1,9 @@
+{% load static %}
+
+{% block content %}
+{% for animal in animals %}
+    <p>{{animal.name}}</p>
+    <p><img src="{{ animal.image_animals.url }}" alt="" class="card-img-top"></p>
+    <p>{{animal.description}}</p>
+{% endfor %}
+{% endblock %}
