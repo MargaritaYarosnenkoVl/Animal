@@ -13,7 +13,7 @@
     font-family: "RobotoCondensed Medium", "Open Sans";
 }
 
-
+/* -------------------- header --------------------*/
 
 .base-header {
     background-color: #EFEFEF;
@@ -39,6 +39,8 @@
     margin-right: 5%;
 }
 
+
+/* -------------------- footer --------------------*/
 
 
 .base-footer {
@@ -149,4 +151,28 @@
     position: absolute;
     right: 2.5%;
     bottom: 25px;
+}
+
+
+/* --------------- общие темы ---------------- */
+
+.page_adress {
+    margin-top: 21px;
+    font-size: 16px;
+    position: relative;
+}
+
+.page_adress span {
+    margin-left: 36px;
+}
+
+.page_adress span::before {
+    position: absolute;
+    content: '';
+    top: 2px;
+    left: 69px;
+    width: 14px;
+    height: 14px;
+    background-image: url('../img/page_adress_figure.png');
+    background-repeat: no-repeat;
 }
