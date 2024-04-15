@@ -66,7 +66,6 @@ class EndedShowList(ListView):
     ordering = '-id'
     template_name = 'ended_show_list.html'
     context_object_name = 'endedshow'
-    paginate_by = 6
     form_class = EndedShowForm
 
     def get_context_data(self, **kwargs):

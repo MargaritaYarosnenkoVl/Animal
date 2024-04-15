@@ -1,8 +1,7 @@
-from ckeditor.fields import RichTextField
-from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
-from django.utils.text import slugify
+from django.utils import timezone
+from django.db.models import Max
 
 
 class Show(models.Model):
@@ -13,7 +12,7 @@ class Show(models.Model):
     quantity = models.CharField(max_length=255, verbose_name='Информация о количестве животных')
     organizer = models.CharField(max_length=255, verbose_name='Информация об организаторе')
     phone = models.CharField(max_length=20, verbose_name='Телефон')
-    is_published = models.BooleanField(default=False, verbose_name='Публикация')
+    date = models.DateTimeField(verbose_name='Дата и время выставки')
 
 
     animals = models.ManyToManyField('Animals', related_name='animals', verbose_name='Животные')
@@ -33,6 +32,10 @@ class Show(models.Model):
 
     def get_absolute_url(self):
         return reverse('show', kwargs={'slug': self.slug})
+
+    @staticmethod
+    def get_upcoming_show():
+        return Show.objects.filter(date__gte=timezone.now()).order_by('date').first()
 
 
 
