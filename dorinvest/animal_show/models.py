@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Max
+from django.utils.text import slugify
 
 
 class Show(models.Model):
@@ -36,6 +37,12 @@ class Show(models.Model):
     @staticmethod
     def get_upcoming_show():
         return Show.objects.filter(date__gte=timezone.now()).order_by('date').first()
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # Генерируем slug из заголовка, если он еще не задан
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
 
 

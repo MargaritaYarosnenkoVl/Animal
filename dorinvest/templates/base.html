@@ -9,8 +9,8 @@
         <img src="{% static 'img/logo_dorinvest.png' %}" alt="logo" width="271px">
         <nav>
             <ul class="navigation">
-                <li><a href="">Ближайшая выставка</a></li>
-                <li><a href="">Прошедшие выставки</a></li>
+                <li><a href="{% url 'show' slug=upcoming_show.slug %}">Ближайшая выставка</a></li>
+                <li><a href="{% url 'ended_show' %}">Прошедшие выставки</a></li>
             </ul>
         </nav>
     </header>

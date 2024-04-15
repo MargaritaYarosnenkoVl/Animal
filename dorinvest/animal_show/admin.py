@@ -1,17 +1,19 @@
-from django.contrib import admin
+
+from django.utils.safestring import mark_safe
 
 from .models import Show, Animals, Feedback, Banner, Story, Location, SociaLinks, Partners, EndedShow, Photoreport, \
     PhotoreprtShow, AnimalImage, Image
 
-from django import forms
+
 from django.contrib import admin
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
 
 
 class ShowAdmin(admin.ModelAdmin):
     """ Админ-панель модели выставки"""
     search_fields = ('title',)
     prepopulated_fields = {'slug': ('title',)}
+
 
 
 class AnimalImageInline(admin.TabularInline):
@@ -24,10 +26,16 @@ class AnimalImageInline(admin.TabularInline):
 class AnimalsAdmin(admin.ModelAdmin):
     """ Админ-панель модели животных"""
     inlines = [AnimalImageInline]
-    list_display = ('name', 'image_animals', 'description', 'category')
+    list_display = ('name', 'get_html_image', 'description', 'category')
     list_display_links = ('name',)
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
+
+    def get_html_image(self, object):
+        if object.image_animals:
+            return mark_safe(f"<img src='{object.image_animals.url}' width=50>")
+
+    get_html_image.short_description = "Миниатюра"
 
 
 class ImageAdmin(admin.ModelAdmin):
@@ -42,14 +50,26 @@ class FeedbackAdmin(admin.ModelAdmin):
 
 class BannerAdmin(admin.ModelAdmin):
     """ Админ-панель модели баннера"""
-    list_display = ('name', 'banner')
+    list_display = ('name', 'get_html_banner')
     list_display_links = ('name',)
+
+    def get_html_banner(self, object):
+        if object.banner:
+            return mark_safe(f"<img src='{object.banner.url}' width=50>")
+
+    get_html_banner.short_description = "Миниатюра"
 
 
 class StoryAdmin(admin.ModelAdmin):
     """ Админ-панель модели Счатливые истории"""
-    list_display = ('name', 'story', 'photo')
+    list_display = ('name', 'story', 'get_html_photo')
     list_display_links = ('name',)
+
+    def get_html_photo(self, object):
+        if object.photo:
+            return mark_safe(f"<img src='{object.photo.url}' width=50>")
+
+    get_html_photo.short_description = "Миниатюра"
 
 
 class LocationAdmin(admin.ModelAdmin):
@@ -60,14 +80,26 @@ class LocationAdmin(admin.ModelAdmin):
 
 class SociaLinksAdmin(admin.ModelAdmin):
     """ Админ-панель модели социальных ссылок"""
-    list_display = ('name', 'social_link', 'social_logo')
+    list_display = ('name', 'social_link', 'get_html_social')
     list_display_links = ('name',)
+
+    def get_html_social(self, object):
+        if object.social_logo:
+            return mark_safe(f"<img src='{object.social_logo.url}' width=50>")
+
+    get_html_social.short_description = "Миниатюра"
 
 
 class PartnersAdmin(admin.ModelAdmin):
     """ Админ-панель модели партнеров"""
-    list_display = ('name', 'logo', 'partners_link')
+    list_display = ('name', 'get_html_partners', 'partners_link')
     list_display_links = ('name',)
+
+    def get_html_partners(self, object):
+        if object.logo:
+            return mark_safe(f"<img src='{object.logo.url}' width=50>")
+
+    get_html_partners.short_description = "Миниатюра"
 
 
 class PhotoreprtShowInline(admin.TabularInline):
@@ -96,6 +128,9 @@ admin.site.register(Partners, PartnersAdmin)
 admin.site.register(EndedShow, EndedShowAdmin)
 admin.site.register(Photoreport, PhotoreportAdmin)
 admin.site.register(Image, ImageAdmin)
+
+admin.site.site_title = 'Админ-панель выставки'
+admin.site.site_header = 'Админ-панель выставки'
 
 
 
