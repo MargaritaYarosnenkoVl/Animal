@@ -129,8 +129,8 @@ admin.site.register(EndedShow, EndedShowAdmin)
 admin.site.register(Photoreport, PhotoreportAdmin)
 admin.site.register(Image, ImageAdmin)
 
-admin.site.site_title = 'Админ-панель выставки'
-admin.site.site_header = 'Админ-панель выставки'
+admin.site.site_title = 'Редактор выставки'
+admin.site.site_header = 'Редактор выставки'
 
 
 
