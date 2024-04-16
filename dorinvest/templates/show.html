@@ -5,49 +5,46 @@
 {% block content %}
 
 
-    {{show.title}}
-    {{show.info}}
-    {{show.quantity}}
-    {{show.organizer}}
-    {{show.phone}}
-    {{show.date}}
-    {{show.locations}}
-    {{show.social_links}}
-
-
-    {% for animal in animals %}
-        {{ animal.name }}
-        <img src="{{ animal.image_animals.url }}" alt="{{ animal.name }}">
-        {{ animal.description }}
-    {% endfor %}
+ <p>  заголовок:  {{show.title}} </p>
+   <p>  информация:  {{show.info}}</p>
+    <p>  количество животных: {{show.quantity}}</p>
+    <p>  организатор: {{show.organizer}}</p>
+    <p>  телефон: {{show.phone}}</p>
+    <p>  дата выставки: {{show.date}}</p>
 
     {% for banner in banners %}
-        {{ banner.name }}
-        <img src="{{ banner.banner.url }}" alt="{{ banner.name }}">
+    <p>Баннер: {{ banner.name }}</p>
+    <p>Изображение: <img src="{{ banner.photo.url }}" alt="{{ banner.name }}"></p>
+{% endfor %}
+
+    {% for animal in animals %}
+       <p> имя: {{ animal.name }}</p>
+       <p> фото : <img src="{{ animal.image_animals.url }}" alt="{{ animal.name }}"></p>
+       <p> краткое описание: {{ animal.short_description }}</p>
     {% endfor %}
 
+
+
     {% for story in stores %}
-        {{ story.name }}
-        <img src="{{ story.photo.url }}" alt="{{ story.name }}">
-        {{ story.story }}
+        <p> фото истории: <img src="{{ story.photo.url }}" alt="{{ story.name }}"></p>
+       <p> история: {{ story.story }}</p>
     {% endfor %}
 
     {% for location in locations %}
-        {{ location.place }}
-        {{ location.phone }}
-        {{ location.duration }}
+        <p> место проведения {{ location.place }}</p>
+       <p> телефон организации {{ location.phone }}</p>
+       <p> время проведения {{ location.duration }}</p>
     {% endfor %}
 
     {% for social_link in social_links %}
-        {{ social_link.name }}
-        <a href="{{ social_logo.url }}">{{ social_link.name }}</a>
-        {{ social_link.social_link }}
+
+       <p> логотип соцсети <a href="{{ social_logo.url }}">{{ social_link.name }}</a></p>
+       <p> ссылка на соцсеть{{ social_link.social_link }}</p>
     {% endfor %}
 
     {% for partner in partners %}
-        {{ partner.name }}
-        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}">
-        {{ partner.partners_link }}
+       <p> партнер <img src="{{ partner.logo.url }}" alt="{{ partner.name }}"></p>
+       <p> ссылка на партнера {{ partner.partners_link }}</p>
     {% endfor %}
 
 

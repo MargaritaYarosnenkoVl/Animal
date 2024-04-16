@@ -120,7 +120,7 @@ class Feedback(models.Model):
 class Banner(models.Model):
     """Модель, содержащая иображение баннера"""
     name = models.CharField(max_length=255, verbose_name='Название баннера')
-    banner = models.ImageField(upload_to='baner/', verbose_name='Банер')
+    photo = models.ImageField(upload_to='baner/', verbose_name='Банер')
 
     class Meta:
         verbose_name = 'Баннер'

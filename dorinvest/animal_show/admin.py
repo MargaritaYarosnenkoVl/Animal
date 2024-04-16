@@ -39,7 +39,12 @@ class AnimalsAdmin(admin.ModelAdmin):
 
 
 class ImageAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('get_html_image',)
+    def get_html_image(self, object):
+        if object.images:
+            return mark_safe(f"<img src='{object.images.url}' width=50>")
+
+    get_html_image.short_description = "Миниатюра"
 
 
 class FeedbackAdmin(admin.ModelAdmin):
@@ -54,8 +59,8 @@ class BannerAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
 
     def get_html_banner(self, object):
-        if object.banner:
-            return mark_safe(f"<img src='{object.banner.url}' width=50>")
+        if object.photo:
+            return mark_safe(f"<img src='{object.photo.url}' width=50>")
 
     get_html_banner.short_description = "Миниатюра"
 
@@ -114,7 +119,13 @@ class EndedShowAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 class PhotoreportAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('get_html_report',)
+
+    def get_html_report(self, object):
+        if object.photo:
+            return mark_safe(f"<img src='{object.photo.url}' width=50>")
+
+    get_html_report.short_description = "Миниатюра"
 
 
 admin.site.register(Show, ShowAdmin)
