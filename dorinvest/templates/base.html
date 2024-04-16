@@ -12,7 +12,7 @@
         </div>
         <nav>
             <ul class="navigation">
-                <li><a href="">Ближайшая выставка</a></li>
+                <li><a href="{% url 'show' slug=upcoming_show.slug %}">Ближайшая выставка</a></li>
                 <li><a href="{% url 'ended_show' %}">Прошедшие выставки</a></li>
                 <li><a href="{% url 'animals_list' %}">Каталог животных</a></li>
             </ul>
