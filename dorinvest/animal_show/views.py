@@ -36,6 +36,7 @@ class ShowDetail(FormMixin, DetailView):
         context['social_links'] = social_links
         context['partners'] = partners
         context['feedback_form'] = FeedbackCreateForm()
+        print(banners)
         return context
 
     def post(self, request, *args, **kwargs):

@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'animal_show.context_processors.upcoming_show',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -123,7 +124,7 @@ STATIC_URL = '/static/'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

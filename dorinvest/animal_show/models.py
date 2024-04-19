@@ -200,7 +200,7 @@ class EndedShow(models.Model):
     descriptions = models.TextField(verbose_name='Информация по прошедшей выставке')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
-    # photoreport = models.ManyToManyField('Photoreport', related_name='photoreport', verbose_name='Фотоотчет с выставки')
+
 
     class Meta:
         verbose_name = 'Прошедшие выставки'
