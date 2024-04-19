@@ -15,7 +15,7 @@
 }
 .animals-page__animal__img {
     width: 100%;
-    max-height: 370px;
+    height: 370px;
     object-fit: cover;
     border-radius: 14px 14px 0 0;
 }
