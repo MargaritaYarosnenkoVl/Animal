@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-r=@py6mhzisjw9#*s2=vx(eotuw0y2knpu6c(y(w#az80rwg#p
 DEBUG = True
 
 # ALLOWED_HOSTS = ['*.example.com', 'example.com']
-ALLOWED_HOSTS = ['127.0.0.1']
-
+ALLOWED_HOSTS = ['*']
+# CSRF_TRUSTED_ORIGINS = ['http://5.228.112.75']
 # Application definition
 
 INSTALLED_APPS = [

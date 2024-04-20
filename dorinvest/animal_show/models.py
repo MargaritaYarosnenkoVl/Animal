@@ -59,17 +59,17 @@ class Animals(models.Model):
     name = models.CharField(max_length=255, verbose_name='Имя животного')
     short_description = models.CharField(max_length=255, verbose_name='Короткое описание животного')
     description = models.TextField(verbose_name='Описание животного')
-    place = models.CharField(max_length=255, verbose_name='Где живет животное')
+    place = models.CharField(max_length=255, verbose_name='Приют')
     birthday = models.CharField(max_length=255, verbose_name='Год рождения')
-    wool = models.CharField(max_length=255, verbose_name='Шерсть животного')
-    color = models.CharField(max_length=255, verbose_name='Цвет животного')
-    activity = models.CharField(max_length=255, verbose_name='Активность животного')
-    friendly = models.CharField(max_length=255, verbose_name='Характер животного')
+    wool = models.CharField(max_length=255, verbose_name='Шерсть')
+    color = models.CharField(max_length=255, verbose_name='Окрас')
+    activity = models.CharField(max_length=255, verbose_name='Активность')
+    friendly = models.CharField(max_length=255, verbose_name='Характер')
     category = models.CharField(max_length=3, choices=ANIMALS_CHOICES, verbose_name='Категория животного')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
     class Meta:
-        verbose_name = 'Животные'
+        verbose_name = 'Животное'
         verbose_name_plural = 'Животные'
         ordering = ['id']
 

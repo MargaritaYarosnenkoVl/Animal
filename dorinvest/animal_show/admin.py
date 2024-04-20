@@ -8,11 +8,6 @@ from .models import Show, Animals, Feedback, Banner, Story, Location, SociaLinks
 from django.contrib import admin
 
 
-def image_upload_to(instance, filename):
-    # Генерация уникального имени файла, сохраняя исходное расширение
-    ext = filename.split('.')[-1]
-    filename = f"{uuid.uuid4()}.{ext}"
-    return f"baner/{filename}"
 
 class ShowAdmin(admin.ModelAdmin):
     """ Админ-панель модели выставки"""
