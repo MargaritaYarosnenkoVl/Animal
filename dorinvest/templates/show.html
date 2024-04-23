@@ -177,9 +177,10 @@
         <div class="newsletter">
             <h1>Обратная связь</h1>
             <p>Если у вас остались вопросы или есть предложения, заполните форму, чтобы мы с вами связались</p>
-            <form method="post" action="#">
-                <input type="text" placeholder="Ваше имя">
-                <input type="text" placeholder="Ваш телефон">
+            <form method="post"  enctype="multipart/form-data">
+                    {% csrf_token %}
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="text" name="user_phone" placeholder="Ваш телефон" required>
                 <button type="submit" title="Submit">Отправить <i class="fa fa-angle-right"></i></button>
             </form>
             <!-- <form method="post" enctype="multipart/form-data">
@@ -200,7 +201,7 @@
             <img src="/static/img/card.png" alt="dog_foto">
         </div>
         <div class="text_card">
-            <p>Культурный центр «Зеленоград» государственное <br>автономное учреждение культуры города Москвы</p>
+            <p>Культурный центр «Зеленоград» Госудаственное <br>автономное учреждение культуры города Москвы</p>
         </div>
         <div class="way_house">
             <img src="/static/img/House.png" alt="main_foto">
