@@ -3,6 +3,11 @@
     margin-top: -63px;
 }
 
+.content_foto img {
+    max-width: 1440px;
+    width: 100%;
+}
+
 .slider-wrapper {
     margin-top: 200px;
     margin-bottom: 500px;
@@ -21,7 +26,7 @@
     border-radius: 14px;
     width: 490px;
     height: 490px;
-    object-fit: contain;
+    object-fit: cover;
 }
 .slider__animal-description {
     position: absolute;
@@ -201,7 +206,7 @@ form .button {
     margin-top: 130px;
     color: rgb(0, 0, 0);
     font-size: 35px;
-    font-weight: 600;
+    /* font-weight: 600; */
     text-align: left;
     margin-left: 108px;
     font-family: "RobotoCondensed Regular", "Open Sans";
@@ -214,10 +219,9 @@ form .button {
 }
 
 .promo4 > p {
-
     color: rgb(0, 0, 0);
     font-size: 32px;
-    font-weight: 600;
+    /* font-weight: 600; */
     margin-top: -80px;
     margin-right: 108px;
     padding-left: 880px;
@@ -234,7 +238,7 @@ form .button {
     margin-top: 440px;
     color: rgb(0, 0, 0);
     font-size: 32px;
-   font-weight: 600;
+   /* font-weight: 600; */
     text-align: left;
     margin-left: 108px;
     font-family: "RobotoCondensed Regular", "Open Sans";
@@ -250,7 +254,7 @@ form .button {
     margin-top: -75px;
     color: rgb(0, 0, 0);
     font-size: 32px;
-    font-weight: 600;
+    /* font-weight: 600; */
     text-align: right;
     margin-right: 108px;
     font-family: "RobotoCondensed Regular", "Open Sans";
@@ -408,7 +412,7 @@ form .button {
     margin-top: 130px;
     color: #000000;
     font-size: 32px;
-    font-weight: 800;
+    /* font-weight: 800; */
     text-align: left;
     margin-left: 108px;
     font-family: "RobotoCondensed Regular", "Open Sans";
@@ -424,7 +428,7 @@ form .button {
 
     color: #000000;
     font-size: 32px;
-    font-weight: 800;
+    /* font-weight: 800; */
     text-align: left;
     margin-top: 80px;
     margin-left: 808px;
@@ -441,7 +445,7 @@ form .button {
     margin-top: 90px;
     color: #000000;
     font-size: 32px;
-    font-weight: 800;
+    /* font-weight: 800; */
     text-align: left;
     margin-left: 108px;
     font-family: "RobotoCondensed Regular", "Open Sans";
@@ -457,7 +461,7 @@ form .button {
 
     color: #000000;
     font-size: 32px;
-    font-weight: 800;
+    /* font-weight: 800; */
     text-align: left;
     margin-left: 798px;
     margin-top: 80px;
@@ -474,7 +478,7 @@ form .button {
     margin-top: 40px;
    color: #000000;
     font-size: 32px;
-    font-weight: 800;
+    /* font-weight: 800; */
     text-align: left;
     margin-left: 108px;
     font-family: "RobotoCondensed Regular", "Open Sans";
@@ -490,7 +494,7 @@ form .button {
     margin-top: 120px;
     color: #000000;
     font-size: 32px;
-    font-weight: 800;
+    /* font-weight: 800; */
     text-align: left;
     margin-left: 808px;
     font-family: "RobotoCondensed Regular", "Open Sans";
