@@ -49,7 +49,10 @@
 
 Для запуска проекта необходимо установить зависимости, выполнить миграции и запустить сервер разработки Django.
 
-bash pip install -r requirements.txt python manage.py migrate python manage.py runserver
+bash 
+- pip install -r requirements.txt 
+- python manage.py migrate
+- python manage.py runserver
 
 
 ## 📜 Лицензия
