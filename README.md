@@ -42,7 +42,7 @@
 
 ## 🌍 Примеры
 
-- [Сайт]([https://dorinvest.pythonanywhere.com/](https://dorinvest.pythonanywhere.com/show/ishu-druga/))
+- [Сайт](https://dorinvest.pythonanywhere.com/show/ishu-druga/)
 - [Админ панель](https://dorinvest.pythonanywhere.com/admin/)
 
 ## 💻 Запуск проекта
